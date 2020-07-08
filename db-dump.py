@@ -8,7 +8,7 @@ dbUser=os.getenv('DB_USER','torvalds')
 dbPass=os.getenv('DB_PASSWORD','showmethecode')
 dbName=os.getenv('DB_NAME','sensor_db')
 tableName=os.getenv('TABLE_NAME', 'power_meters')
-DAYS_TO_FETCH=3
+DAYS_TO_FETCH=os.getenv(DAYS_TO_FETCH, 3)
 def getQueryResults(queryString):
 
     db=dbapi.connect(host=dbHost,user=dbUser,passwd=dbPass, database=dbName)
