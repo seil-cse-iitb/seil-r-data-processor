@@ -39,7 +39,7 @@ if not os.path.exists('data'):
 # Run a loop for all sensors
 for sensorIdx, sensor in enumerate(sensors):
     # Anonymise the sensor id with an index
-    print("Sensor idx: "+sensorIdx)
+    print("Sensor idx: "+str(sensorIdx))
     increment = 24*3600
     starttime=datetime.datetime(2017,1,1,0,0).timestamp()
     # Fetch measurements of R<i> for DAYS_TO_FETCH starting from 2017-01-01
