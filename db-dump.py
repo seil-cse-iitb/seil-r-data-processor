@@ -8,7 +8,7 @@ dbUser=os.getenv('DB_USER','torvalds')
 dbPass=os.getenv('DB_PASSWORD','showmethecode')
 dbName=os.getenv('DB_NAME','sensor_db')
 tableName=os.getenv('TABLE_NAME', 'power_meters')
-DAYS_TO_FETCH=os.getenv(DAYS_TO_FETCH, 3)
+DAYS_TO_FETCH=os.getenv('DAYS_TO_FETCH', 3)
 def getQueryResults(queryString):
 
     db=dbapi.connect(host=dbHost,user=dbUser,passwd=dbPass, database=dbName)
@@ -32,6 +32,9 @@ rows = getQueryResults(queryString)
 saveToCsv(rows, 'sensors.csv')
 sensors = list(rows)
 
+# Create the data directory if it doesn't exist'
+if not os.path.exists('data'):
+    os.mkdir('data')
 # Fetch measurements of R1 for one day and save to csv
 sensorIdx=0
 increment = 24*3600
@@ -43,10 +46,10 @@ for i in range(1,DAYS_TO_FETCH+1):
     rows = getQueryResults(queryString)
     d=datetime.datetime.fromtimestamp(starttime)
     directory = "data/R%d"%(sensorIdx+1)
-    print('Saving %s/%s-%s-%s.csv'%(directory,d.year,d.month,d.day))
+    print('Saving %s/%s.csv'%(directory,d.strftime('%Y-%m-%d')))
     if not os.path.exists(directory):
         os.mkdir(directory)
-    saveToCsv(rows, '%s/%s-%s-%s.csv'%(directory,d.year,d.month,d.day))
+    saveToCsv(rows, '%s/%s.csv'%(directory,d.strftime('%Y-%m-%d')))
 
     # increment starttime
     starttime += increment
