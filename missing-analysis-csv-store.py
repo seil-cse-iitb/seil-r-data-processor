@@ -1,5 +1,5 @@
-# import pandas as pd
-# import numpy as np
+import pandas as pd
+import numpy as np
 import csv, os, datetime, json
 import shutil
 
@@ -12,8 +12,8 @@ destPathPrefix=os.getenv('DEST_PREFIX', '/home/dest')
 startDateStr = os.getenv('START_DATE', '2019-01-31')
 endDateStr = os.getenv('END_DATE', '2019-12-31')
 
-startDate=datetime.strptime(startDateStr, '%Y-%m-%d')
-endDate=datetime.strptime(endDateStr, '%Y-%m-%d')
+startDate=datetime.datetime.strptime(startDateStr, '%Y-%m-%d')
+endDate=datetime.datetime.strptime(endDateStr, '%Y-%m-%d')
 sensorIdx=1
 sensorMap={}
 d=startDate
@@ -56,9 +56,9 @@ delta = endDate-startDate
 delta = delta.days
 dateList = [startDate + datetime.timedelta(days=x) for x in range(delta)]
 
-dateList = list(map(lambda x:x.strftime('%Y-%m-%d'), dateList))
+dateListStr = list(map(lambda x:x.strftime('%Y-%m-%d'), dateList))
 # Create a column with the list of dates
-analysis['date'] = dateList
+analysis['date'] = dateListStr
 
 # Iterate through the sensor map
 for sensor in sensorMap:
@@ -67,12 +67,13 @@ for sensor in sensorMap:
     availabilityList=[]
     for date in dateList:
         # Generate the directory path
-        path=os.path.join(sourcePathPrefix, d.strftime("%Y/%m/%d"), sourcePathSuffix)
+        path=os.path.join(sourcePathPrefix, date.strftime("%Y/%m/%d"), sourcePathSuffix)
 
         # The file could be a csv or compressed csv (csv.gz)
-        filename1 = '%s_%s.csv'%(date, sensor)
+        filename1 = '%s_%s.csv'%(sensor, date.strftime('%Y-%m-%d'))
         filename1 = os.path.join(path, filename1)
-        filename2 = '%s_%s.csv.gz'%(date, sensor)
+        print(filename1)
+        filename2 = '%s_%s.csv.gz'%(sensor, date.strftime('%Y-%m-%d'))
         filename2 = os.path.join(path, filename2)
         
         try:
