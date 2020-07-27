@@ -25,8 +25,8 @@ ax.set_yticklabels(sensors)
 # Rotate the tick labels and set their alignment.
 # plt.setp(ax.get_xticklabels(), rotation=45, ha="right",rotation_mode="anchor")
 
-ax.set_title("Availability of sensor data in 2019-20")
+ax.set_title("Availability of sensor data from %s to %s"%(dates[0],dates[-1]))
 # fig.tight_layout()
 fig.set_size_inches(50, 10)
 plt.colorbar(im)
-plt.savefig("availability.png")
+plt.savefig("availability-%s-to-%s.png"%(dates[0],dates[-1]))
