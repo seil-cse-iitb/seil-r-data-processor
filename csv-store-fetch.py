@@ -16,6 +16,11 @@ endDateStr = os.getenv('END_DATE', '2019-12-31')
 startDate=datetime.datetime.strptime(startDateStr, '%Y-%m-%d')
 endDate=datetime.datetime.strptime(endDateStr, '%Y-%m-%d')
 
+sensorList = os.getenv('SENSOR_LIST',"")
+sensorList = sensorList.split(",")
+if sensorList[0] == '':
+    sensorList = None
+print(sensorList)
 sensorIdx=1
 sensorMap={}
 d=startDate
@@ -25,8 +30,10 @@ while d<= endDate:
     try:
         path=os.path.join(sourcePathPrefix, d.strftime("%Y/%m/%d"), sourcePathSuffix)
         for filename in sorted(os.listdir(path)):
-            print("Copying %s"%filename)
             sensorId = filename.split("_")[0]
+            if sensorList and sensorId not in sensorList:
+                continue
+            print("Copying %s"%filename)
             #if sensorId not in sensorMap:
             #    sensorMap[sensorId] = 'R%s'%sensorIdx
             #    sensorIdx+=1
