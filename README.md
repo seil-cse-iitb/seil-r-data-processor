@@ -27,3 +27,10 @@ It will generate an image with the naming convention `availabilitiy-START_DATE-t
 ```
 python strip-columns.py
 ```
+
+* Generate useful statistics like mean, standard deviation, kurtosis, skew, etc.
+```
+python statistics.py
+```
+We make use of Dask to perform analysis on multiple csv files without loading them all into memory
+This needs Python 3.6 which is not installed by default on Ubuntu 16.
