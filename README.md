@@ -14,3 +14,16 @@ source .seil-r.venv/bin/activate
 ```
 pip install -r requirements.txt
 ```
+
+# Scripts
+
+* To plot the missing analysis, set the START_DATE and END_DATE in `.env` and run 
+```
+python plot.py
+```
+It will generate an image with the naming convention `availabilitiy-START_DATE-to-END_DATE.png`
+
+* The raw files contained more fields than necessary, so we strip them out
+```
+python strip-columns.py
+```
